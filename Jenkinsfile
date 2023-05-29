@@ -5,9 +5,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-               sh('''#!c:\path\to\bash.exe
-                echo "I am in bash"
-                ''')
+                bat 'mvn --version'
             }
         }
     }
