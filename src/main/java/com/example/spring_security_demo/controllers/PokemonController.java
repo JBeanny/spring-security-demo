@@ -3,7 +3,6 @@ package com.example.spring_security_demo.controllers;
 import com.example.spring_security_demo.models.Pokemon;
 import com.example.spring_security_demo.services.PokemonService;
 import com.example.spring_security_demo.utils.CustomResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,7 +48,7 @@ public class PokemonController {
         return updatedPokemon != null ?
                 customResponse.getResponseMessage("success","Successfully Updated",updatedPokemon)
                 :
-                customResponse.getResponseMessage("fail","Failed to update",updatedPokemon);
+                customResponse.getResponseMessage("fail","Failed to update",null);
 
     }
 

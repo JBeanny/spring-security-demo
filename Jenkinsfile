@@ -2,20 +2,14 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
     stages {
         stage('build') {
             steps {
                 sh 'mvn --version'
-            }
-        }
-        stage('test') {
-            steps {
-                echo 'Hello World test'
-            }
-        }
-        stage('deploy') {
-            steps {
-                echo 'Hello World deploy'
+                echo 'Hello Jenkins'
             }
         }
     }
