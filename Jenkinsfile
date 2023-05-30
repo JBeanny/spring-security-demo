@@ -4,7 +4,7 @@ pipeline {
     agent any
     environment {
         registry = "jbeanny/jenkins-pipeline-test"
-        registryCredential = "jbeanny"
+        registryCredential = "docker-jenkins-v1"
     }
     stages {
         stage('building docker image') {
