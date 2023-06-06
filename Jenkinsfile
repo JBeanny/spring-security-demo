@@ -30,22 +30,30 @@ pipeline {
         stage('Merging to Development branch') {
             steps {
                 script {
-                    sh 'git config --global credential.helper cache'
-                    sh 'git config --global push.default simple'
+                    git url: "ssh://jenkins@JBeanny/spring-security-demo:12345/spring-security-demo.git",
+                        credentialsId: 'registryCredential',
+                        branch: development
 
-                    checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: BRANCH_NAME]],
-                        extensions: [
-                            [$class: 'CloneOption', noTags: true, reference: '', shallow: true]
-                        ],
-                        submoduleCfg: [],
-                        userRemoteConfigs: [
-                            [ credentialsId: 'registryCredential', url: "https://github.com/JBeanny/spring-security-demo.git"]
-                        ]
-                    ])
-                    sh "git checkout $BRANCH_NAME" //To get a local branch tracking remote
-                    sh "git push"
+                    sh 'git tag -a tagName -m "merging"'
+                    sh 'git merge main'
+                    sh 'git commit -am "Merged main branch to development'
+                    sh "git push origin development"
+                    // sh 'git config --global credential.helper cache'
+                    // sh 'git config --global push.default simple'
+
+                    // checkout([
+                    //     $class: 'GitSCM',
+                    //     branches: [[name: BRANCH_NAME]],
+                    //     extensions: [
+                    //         [$class: 'CloneOption', noTags: true, reference: '', shallow: true]
+                    //     ],
+                    //     submoduleCfg: [],
+                    //     userRemoteConfigs: [
+                    //         [ credentialsId: 'registryCredential', url: "https://github.com/JBeanny/spring-security-demo.git"]
+                    //     ]
+                    // ])
+                    // sh "git checkout $BRANCH_NAME" //To get a local branch tracking remote
+                    // sh "git push"
                 }
             }
         }
