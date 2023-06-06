@@ -30,34 +30,15 @@ pipeline {
         stage('Merging to Development branch') {
             steps {
                 script {
-                    // sh "git config --global user.email" 
-                    // sh "git config --global user.name"
-
                     git url: "https://github.com/JBeanny/spring-security-demo.git",
                         credentialsId: 'jenkins-git-creds',
                         branch: BRANCH_NAME
 
-                    // sh 'git checkout ' + BRANCH_NAME
-                    sh 'git tag -a tagName -m "merging"'
-                    sh 'git merge main'
-                    sh 'git commit -am "Merged main branch to development"'
-                    sh "git push"
-                    // sh 'git config --global credential.helper cache'
-                    // sh 'git config --global push.default simple'
-
-                    // checkout([
-                    //     $class: 'GitSCM',
-                    //     branches: [[name: BRANCH_NAME]],
-                    //     extensions: [
-                    //         [$class: 'CloneOption', noTags: true, reference: '', shallow: true]
-                    //     ],
-                    //     submoduleCfg: [],
-                    //     userRemoteConfigs: [
-                    //         [ credentialsId: 'registryCredential', url: "https://github.com/JBeanny/spring-security-demo.git"]
-                    //     ]
-                    // ])
-                    // sh "git checkout $BRANCH_NAME" //To get a local branch tracking remote
-                    // sh "git push"
+                    bat 'git checkout ' + BRANCH_NAME
+                    bat 'git tag -a tagName -m "merging"'
+                    bat 'git merge main'
+                    bat 'git commit -am "Merged main branch to development"'
+                    bat "git push origin " + BRANCH_NAME
                 }
             }
         }
