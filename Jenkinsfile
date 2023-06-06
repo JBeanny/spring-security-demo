@@ -7,16 +7,15 @@ pipeline {
         registryCredential = "docker-jenkins-v1"
     }
     stages {
-        stage('building docker image') {
+        stage('Building Docker Image') {
             steps {
-                // bat 'mvn --version'
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
         }
 
-        stage('deploying image') {
+        stage('Deploying Docker Image') {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
