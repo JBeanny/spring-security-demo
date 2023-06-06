@@ -30,14 +30,18 @@ pipeline {
         stage('Merging to Development branch') {
             steps {
                 script {
-                    git url: "ssh://jenkins@JBeanny/spring-security-demo:12345/spring-security-demo.git",
-                        credentialsId: 'registryCredential',
-                        branch: development
+                    // sh "git config --global user.email" 
+                    // sh "git config --global user.name"
 
+                    git url: "ssh://jenkins@JBeanny/spring-security-demo:12345/spring-security-demo.git",
+                        credentialsId: 'jenkins-creds',
+                        branch: BRANCH_NAME
+
+                    sh 'git checkout ' + BRANCH_NAME
                     sh 'git tag -a tagName -m "merging"'
                     sh 'git merge main'
-                    sh 'git commit -am "Merged main branch to development'
-                    sh "git push origin development"
+                    sh 'git commit -am "Merged main branch to development"'
+                    sh "git push origin " + BRANCH_NAME
                     // sh 'git config --global credential.helper cache'
                     // sh 'git config --global push.default simple'
 
