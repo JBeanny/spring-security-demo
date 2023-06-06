@@ -1,5 +1,7 @@
 // Jenkinsfile (Declarative Pipeline)
 /* Requires the Docker Pipeline plugin */
+def BRANCH_NAME='development'
+
 pipeline {
     agent any
     environment {
@@ -22,6 +24,26 @@ pipeline {
                         dockerImage.push()
                     }
                 }
+            }
+        }
+
+        stage('Merging to Development branch') {
+            steps {
+                sh 'git config --global credential.helper cache'
+                sh 'git config --global push.default simple'
+
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: BRANCH_NAME]],
+                    extensions: [
+                        [$class: 'CloneOption', noTags: true, reference: '', shallow: true]
+                    ],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [
+                        [ credentialsId: 'registryCredential', url: "https://github.com/JBeanny/spring-security-demo.git"]
+                    ]
+                ])
+                sh "git checkout $BRANCH_NAME" //To get a local branch tracking remote
             }
         }
     }
