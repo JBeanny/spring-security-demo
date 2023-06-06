@@ -33,8 +33,8 @@ pipeline {
                     // sh "git config --global user.email" 
                     // sh "git config --global user.name"
 
-                    git url: "ssh://jenkins@JBeanny/spring-security-demo:12345/spring-security-demo.git",
-                        credentialsId: 'jenkins-creds',
+                    git url: "ssh://jenkins@https://github.com/JBeanny/spring-security-demo:12345/https://github.com/JBeanny/spring-security-demo.git",
+                        credentialsId: 'jenkins-git-creds',
                         branch: BRANCH_NAME
 
                     sh 'git checkout ' + BRANCH_NAME
