@@ -37,11 +37,11 @@ pipeline {
                         credentialsId: 'jenkins-git-creds',
                         branch: BRANCH_NAME
 
-                    sh 'git checkout ' + BRANCH_NAME
+                    // sh 'git checkout ' + BRANCH_NAME
                     sh 'git tag -a tagName -m "merging"'
                     sh 'git merge main'
                     sh 'git commit -am "Merged main branch to development"'
-                    sh "git push origin " + BRANCH_NAME
+                    sh "git push"
                     // sh 'git config --global credential.helper cache'
                     // sh 'git config --global push.default simple'
 
