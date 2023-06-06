@@ -45,6 +45,7 @@ pipeline {
                         ]
                     ])
                     sh "git checkout $BRANCH_NAME" //To get a local branch tracking remote
+                    sh "git push"
                 }
             }
         }
