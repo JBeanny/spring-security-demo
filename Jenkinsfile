@@ -47,21 +47,15 @@ pipeline {
                 
                 git(
                     url: "https://github.com/JBeanny/spring-security-demo.git",
-                    credentialsId: 'jenkins-git-creds',
                     branch: "development",
                     changelog: true,
                     poll: true
                 )
-                script {
-                    git merge main
-                    git push origin development
-                }
 
-            //     withCredentials([gitUsernamePassword(credentialsId: 'jbeanny-github-token', gitToolName: 'Default')]) {
-            //         git merge main
-            //         git push origin development
-            //     }
-            // }
+                withCredentials([gitUsernamePassword(credentialsId: 'jbeanny-github-token', gitToolName: 'Default')]) {
+                    bat "C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe merge main"
+                    bat "C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe push origin development"
+                }
             }
         }
     }
