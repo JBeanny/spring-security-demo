@@ -31,18 +31,30 @@ pipeline {
 
         stage('Merging to Development branch') {
             steps {
-                script {
-                    git config --global user.email githubUserEmail
-                    git config --global user.name githubUsername
+                // script {
+                //     git config --global user.email githubUserEmail
+                //     git config --global user.name githubUsername
 
-                    // git url: "https://github.com/JBeanny/spring-security-demo.git",
-                    //     credentialsId: 'jenkins-git-creds',
-                    //     branch: BRANCH_NAME
-                    git checkout BRANCH_NAME
-                    git tag -a tagName -m "merging"
-                    git merge main
-                    git commit -am "Merged main branch to development"
-                    git push
+                //     // git url: "https://github.com/JBeanny/spring-security-demo.git",
+                //     //     credentialsId: 'jenkins-git-creds',
+                //     //     branch: BRANCH_NAME
+                //     git checkout BRANCH_NAME
+                //     git tag -a tagName -m "merging"
+                //     git merge main
+                //     git commit -am "Merged main branch to development"
+                //     git push
+                // }
+                
+                git(
+                    url: "https://github.com/JBeanny/spring-security-demo.git",
+                    branch: "development",
+                    changelog: true,
+                    poll: true
+                )
+
+                withCredentials([gitUsernamePassword(credentialsId: 'jbeanny-github-token', gitToolName: 'Default')]) {
+                    sh "git merge main"
+                    sh "git push origin development"
                 }
             }
         }
