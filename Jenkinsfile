@@ -7,6 +7,8 @@ pipeline {
     environment {
         registry = "jbeanny/jenkins-pipeline-test"
         registryCredential = "docker-jenkins-v1"
+        githubUserEmail =  "github-user.email"
+        githubUsername = "github-user.name"
     }
     stages {
         stage('Building Docker Image') {
@@ -30,6 +32,9 @@ pipeline {
         stage('Merging to Development branch') {
             steps {
                 script {
+                    git config --global user.email githubUserEmail
+                    git config --global user.name githubUsername
+
                     git url: "https://github.com/JBeanny/spring-security-demo.git",
                         credentialsId: 'jenkins-git-creds',
                         branch: BRANCH_NAME
