@@ -53,8 +53,8 @@ pipeline {
                 )
 
                 withCredentials([gitUsernamePassword(credentialsId: 'jbeanny-github-token', gitToolName: 'Default')]) {
-                    sh "git merge main"
-                    sh "git push origin development"
+                    bat "git merge main"
+                    bat "git push origin development"
                 }
             }
         }
