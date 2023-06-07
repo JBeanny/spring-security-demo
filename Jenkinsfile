@@ -51,9 +51,11 @@ pipeline {
                     changelog: true,
                     poll: true
                 )
+                script {
+                    git merge main
+                    git push origin development
+                }
 
-                git merge main
-                git push origin development
             //     withCredentials([gitUsernamePassword(credentialsId: 'jbeanny-github-token', gitToolName: 'Default')]) {
             //         git merge main
             //         git push origin development
