@@ -53,8 +53,8 @@ pipeline {
                 )
 
                 withCredentials([gitUsernamePassword(credentialsId: 'jbeanny-github-token', gitToolName: 'Default')]) {
-                    bat "C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe merge main"
-                    bat "C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe push origin development"
+                    bat '"C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe" merge main'
+                    bat '"C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe" push origin development'
                 }
             }
         }
