@@ -47,6 +47,7 @@ pipeline {
                 
                 git(
                     url: "https://github.com/JBeanny/spring-security-demo.git",
+                    credentialsId: 'jenkins-git-creds',
                     branch: "development",
                     changelog: true,
                     poll: true
