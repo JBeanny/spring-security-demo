@@ -1,5 +1,3 @@
-// Jenkinsfile (Declarative Pipeline)
-/* Requires the Docker Pipeline plugin */
 def BRANCH_NAME='development'
 
 pipeline {
@@ -7,8 +5,6 @@ pipeline {
     environment {
         registry = "jbeanny/jenkins-pipeline-test"
         registryCredential = "docker-jenkins-v1"
-        githubUserEmail =  "github-user.email"
-        githubUsername = "github-user.name"
     }
     stages {
         stage('Building Docker Image') {
@@ -29,32 +25,19 @@ pipeline {
             }
         }
 
+        // merging with main and push to development branch
         stage('Merging to Development branch') {
             steps {
-                // script {
-                //     git config --global user.email githubUserEmail
-                //     git config --global user.name githubUsername
-
-                //     // git url: "https://github.com/JBeanny/spring-security-demo.git",
-                //     //     credentialsId: 'jenkins-git-creds',
-                //     //     branch: BRANCH_NAME
-                //     git checkout BRANCH_NAME
-                //     git tag -a tagName -m "merging"
-                //     git merge main
-                //     git commit -am "Merged main branch to development"
-                //     git push
-                // }
-                
                 git(
                     url: "https://github.com/JBeanny/spring-security-demo.git",
-                    branch: "development",
+                    branch: BRANCH_NAME,
                     changelog: true,
                     poll: true
                 )
 
                 withCredentials([gitUsernamePassword(credentialsId: 'jbeanny-github-token', gitToolName: 'Default')]) {
                     bat '"C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe" merge origin/main'
-                    bat '"C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe" push origin development'
+                    bat '"C:\\Users\\ysotharoth\\AppData\\Local\\Programs\\Git\\cmd\\git.exe" push origin ' + BRANCH_NAME
                 }
             }
         }
