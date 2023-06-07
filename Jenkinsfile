@@ -34,11 +34,10 @@ pipeline {
                         credentialsId: 'jenkins-git-creds',
                         branch: BRANCH_NAME
 
-                    bat 'git checkout ' + BRANCH_NAME
-                    bat 'git tag -a tagName -m "merging"'
-                    bat 'git merge main'
-                    bat 'git commit -am "Merged main branch to development"'
-                    bat "git push origin " + BRANCH_NAME
+                    git tag -a tagName -m "merging"
+                    git merge main
+                    git commit -am "Merged main branch to development"
+                    git push
                 }
             }
         }
